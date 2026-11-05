@@ -1,0 +1,5 @@
+# Pinecone knowledge base (needs PINECONE_API_KEY and the indexes built by vectorize-rental-docs.ipynb)
+sentence-transformers
+pinecone
+# Live bank-rate search for /loan_comparison (needs TAVILY_API_KEY)
+tavily-python

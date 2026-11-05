@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-google-blue: #4285f4;
+  --color-google-red: #ea4335;
+  --color-google-yellow: #fbbc04;
+  --color-google-green: #34a853;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --font-google-sans: 'Google Sans', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-roboto) !important;
+    color: var(--color-gray-900) !important;
+  }
+
+  /* Google Header */
+  .google-header {
+    background: white !important;
+    border-bottom: 1px solid var(--color-gray-100) !important;
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.08) !important;
+  }
+
+  /* Google Logo */
+  .google-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-family: var(--font-google-sans) !important;
+    font-weight: 500 !important;
+    font-size: 18px !important;
+    color: var(--color-gray-900) !important;
+  }
+
+  /* Google Badge */
+  .google-badge {
+    display: flex !important;
+    align-items: center !important;
+    background: var(--color-gray-50) !important;
+    border: 1px solid var(--color-gray-200) !important;
+    border-radius: 20px !important;
+    padding: 6px 12px !important;
+    font-family: var(--font-google-sans) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--color-gray-800) !important;
+  }
+
+  /* Google Typography */
+  .google-hero-title {
+    font-family: var(--font-google-sans) !important;
+    font-size: 3.5rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    color: var(--color-gray-900) !important;
+  }
+
+  .google-hero-subtitle {
+    font-family: var(--font-roboto) !important;
+    font-size: 1.125rem !important;
+    line-height: 1.6 !important;
+    color: var(--color-gray-600) !important;
+  }
+
+  /* Google Cards */
+  .google-card {
+    background: white !important;
+    border: 1px solid var(--color-gray-100) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.08), 0 4px 8px 3px rgba(60, 64, 67, 0.04) !important;
+    transition: all 0.15s ease !important;
+  }
+
+  .google-card:hover {
+    box-shadow: 0 2px 6px 2px rgba(60, 64, 67, 0.15), 0 8px 24px 4px rgba(60, 64, 67, 0.08) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Floating Cards */
+  .google-card-floating {
+    background: white !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 16px 8px rgba(60, 64, 67, 0.12), 0 8px 32px 16px rgba(60, 64, 67, 0.08) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: gentle-float 6s ease-in-out infinite !important;
+  }
+
+  .google-upload-card-floating {
+    background: white !important;
+    border-radius: 24px !important;
+    padding: 32px !important;
+    box-shadow: 0 8px 32px 8px rgba(60, 64, 67, 0.15), 0 16px 64px 16px rgba(60, 64, 67, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: gentle-float 8s ease-in-out infinite !important;
+  }
+
+  .google-upload-card-floating:hover {
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 0 12px 48px 12px rgba(60, 64, 67, 0.2), 0 20px 80px 20px rgba(60, 64, 67, 0.12) !important;
+  }
+
+  /* Google Buttons */
+  .google-button {
+    font-family: var(--font-google-sans) !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    transition: all 0.15s ease !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  .google-primary-button {
+    background: var(--color-google-blue) !important;
+    color: white !important;
+    font-family: var(--font-google-sans) !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    padding: 12px 24px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 1px 3px 0 rgba(66, 133, 244, 0.3) !important;
+  }
+
+  .google-primary-button:hover {
+    background: #3367d6 !important;
+    box-shadow: 0 2px 8px 2px rgba(66, 133, 244, 0.4) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .google-upload-hover:hover {
+    animation: sparkle-glow 0.6s ease-in-out !important;
+  }
+
+  /* Feature Icons */
+  .google-feature-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--bg-color) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .google-feature-icon:hover {
+    background: var(--bg-color-dark) !important;
+    transform: scale(1.1) !important;
+  }
+
+  /* Google Loading Animation */
+  .google-loading-dots {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 auto !important;
+  }
+
+  .google-loading-dot {
+    animation: google-bounce 1.4s ease-in-out infinite both !important;
+  }
+
+  .dot-1 {
+    background-color: var(--color-google-blue) !important;
+    animation-delay: -0.32s !important;
+  }
+
+  .dot-2 {
+    background-color: var(--color-google-red) !important;
+    animation-delay: -0.16s !important;
+  }
+
+  .dot-3 {
+    background-color: var(--color-google-yellow) !important;
+    animation-delay: 0s !important;
+  }
+
+  .dot-4 {
+    background-color: var(--color-google-green) !important;
+    animation-delay: 0.16s !important;
+  }
+
+  /* Character Animations */
+  .google-character-float {
+    animation: character-float 4s ease-in-out infinite !important;
+  }
+
+  .google-icon-float {
+    animation: icon-float 3s ease-in-out infinite !important;
+  }
+
+  .google-pointing-arrow {
+    animation: pointing-bounce 2s ease-in-out infinite !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+    color: var(--color-google-blue) !important;
+  }
+
+  /* Google Animations */
+  .google-fade-in {
+    animation: google-fade-in 0.6s ease-out forwards !important;
+  }
+
+  .google-slide-in {
+    animation: google-slide-in 0.8s ease-out forwards !important;
+  }
+
+  .google-pulse {
+    animation: google-pulse 2s ease-in-out infinite !important;
+  }
+
+  .google-float {
+    animation: google-float 6s ease-in-out infinite !important;
+  }
+
+  .sparkle {
+    animation: sparkle-twinkle 2s ease-in-out infinite !important;
+  }
+
+  /* Progress Bar */
+  .google-progress {
+    width: 100% !important;
+    height: 4px !important;
+    background: var(--color-gray-200) !important;
+    border-radius: 2px !important;
+    overflow: hidden !important;
+  }
+
+  .google-progress-bar {
+    height: 100% !important;
+    background: linear-gradient(90deg, var(--color-google-blue), var(--color-google-green)) !important;
+    border-radius: 2px !important;
+    transition: width 0.3s ease !important;
+  }
+
+  /* Dark mode overrides */
+  .dark .google-card {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+  }
+
+  .dark .google-hero-title {
+    color: white !important;
+  }
+
+  .dark .google-hero-subtitle {
+    color: #d1d5db !important;
+  }
+
+  /* Keyframe Animations */
+  @keyframes google-bounce {
+    0%, 80%, 100% {
+      transform: scale(0.8) !important;
+    }
+    40% {
+      transform: scale(1.2) !important;
+    }
+  }
+
+  @keyframes google-fade-in {
+    from {
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+    }
+    to {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  }
+
+  @keyframes google-slide-in {
+    from {
+      opacity: 0 !important;
+      transform: translateX(-30px) !important;
+    }
+    to {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+    }
+  }
+
+  @keyframes google-pulse {
+    0%, 100% {
+      transform: scale(1) !important;
+    }
+    50% {
+      transform: scale(1.05) !important;
+    }
+  }
+
+  @keyframes google-float {
+    0%, 100% {
+      transform: translateY(0px) !important;
+    }
+    50% {
+      transform: translateY(-10px) !important;
+    }
+  }
+
+  @keyframes gentle-float {
+    0%, 100% {
+      transform: translateY(0px) !important;
+    }
+    50% {
+      transform: translateY(-8px) !important;
+    }
+  }
+
+  @keyframes character-float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg) !important;
+    }
+    25% {
+      transform: translateY(-5px) rotate(-1deg) !important;
+    }
+    75% {
+      transform: translateY(-3px) rotate(1deg) !important;
+    }
+  }
+
+  @keyframes icon-float {
+    0%, 100% {
+      transform: translateY(0px) !important;
+    }
+    50% {
+      transform: translateY(-6px) !important;
+    }
+  }
+
+  @keyframes pointing-bounce {
+    0%, 100% {
+      transform: translateX(0px) !important;
+    }
+    50% {
+      transform: translateX(8px) !important;
+    }
+  }
+
+  @keyframes sparkle-twinkle {
+    0%, 100% {
+      opacity: 0.7 !important;
+      transform: scale(1) !important;
+    }
+    50% {
+      opacity: 1 !important;
+      transform: scale(1.2) !important;
+    }
+  }
+
+  @keyframes sparkle-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(66, 133, 244, 0.3) !important;
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(66, 133, 244, 0.6), 0 0 30px rgba(66, 133, 244, 0.3) !important;
+    }
+  }
+}
