@@ -20,7 +20,17 @@ Imagine opening a 20-page rental agreement and actually understanding it in 2 mi
 
 ## 🔄 User Flow
 
-<img width="696" height="666" alt="LawLight user flow" src="https://github.com/user-attachments/assets/3f14d2f1-488c-4ced-ad3c-1440e47c30e3" />
+```mermaid
+flowchart TD
+    U["👤 User uploads a contract PDF"] --> FE["Next.js frontend<br/>extracts the text in the browser with pdf.js"]
+    FE -- "POST /analyze" --> BE["Flask backend API"]
+    BE --> T["Detect contract type<br/>rental · employment · loan"]
+    T --> G["Google Gemini<br/>key terms · summary · flowchart<br/>clause-by-clause risk ratings"]
+    PC[("Pinecone reference clauses<br/>optional")] -.-> G
+    G --> R["Results page<br/>summary &amp; key terms · risk ratings<br/>recommended actions · flowchart"]
+    R --> C["Chat assistant<br/>ask questions about the contract"]
+    C -- "POST /chatbot" --> BE
+```
 
 ---
 
