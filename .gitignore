@@ -14,3 +14,6 @@ npm-debug.log
 yarn-error.log
 .env.local
 !.env.example
+
+# Local report files (college templates, filled-in report)
+ignore ts/

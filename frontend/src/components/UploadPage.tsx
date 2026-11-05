@@ -20,6 +20,8 @@ interface AdditionalData {
   keyEntities?: any;
   calendarEvents?: any;
   summary?: string;
+  clausesTotal?: number;
+  clausesFailed?: number;
   detailedAnalysis?: {
     analysis: {
       actionable_advice: string;
@@ -164,6 +166,8 @@ export function UploadPage({ onAnalysisComplete }: UploadPageProps) {
             calendarEvents: data.calendar_events,
             summary: data.summary,
             detailedAnalysis: data.detailed_analysis,
+            clausesTotal: data.clauses_total,
+            clausesFailed: data.clauses_failed,
             flowchart: data.flowchart,
           },
         });

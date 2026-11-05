@@ -34,6 +34,8 @@ interface ResultsPageProps {
       }[];
       flowchart?: string;
       keyEntities?: { [key: string]: string };
+      clausesTotal?: number;
+      clausesFailed?: number;
     };
   };
   onNewAnalysis: () => void;
@@ -277,26 +279,38 @@ export function ResultsPage({ analysisData, onNewAnalysis }: ResultsPageProps) {
                   overallRiskLevel = "neutral";
                 }
 
-                // Map to display string and color
+                // Map to display string and color. With no analysed clauses we can't call it "Low".
                 const overallRisk = {
                   level:
-                    overallRiskLevel === "risky"
-                      ? "High"
-                      : overallRiskLevel === "neutral"
-                        ? "Medium"
-                        : "Low",
-                  color: getRiskColor(overallRiskLevel),
+                    riskLevels.length === 0
+                      ? "Unknown"
+                      : overallRiskLevel === "risky"
+                        ? "High"
+                        : overallRiskLevel === "neutral"
+                          ? "Medium"
+                          : "Low",
+                  color: riskLevels.length === 0 ? "text-gray-600" : getRiskColor(overallRiskLevel),
                 };
+                const failed = analysisData.additionalData?.clausesFailed || 0;
+                const total = analysisData.additionalData?.clausesTotal || 0;
 
                 return (
-                  <div className="border-t border-gray-200 pt-4 flex items-center gap-3">
-                    <AlertTriangle className="w-5 h-5 text-google-yellow" />
-                    <p className="font-roboto text-gray-800">
-                      <span className="font-medium">Overall Risk Level:</span>{" "}
-                      <span className={`font-medium capitalize ${overallRisk.color}`}>
-                        {overallRisk.level}
-                      </span>
-                    </p>
+                  <div className="border-t border-gray-200 pt-4 space-y-2">
+                    <div className="flex items-center gap-3">
+                      <AlertTriangle className="w-5 h-5 text-google-yellow" />
+                      <p className="font-roboto text-gray-800">
+                        <span className="font-medium">Overall Risk Level:</span>{" "}
+                        <span className={`font-medium capitalize ${overallRisk.color}`}>
+                          {overallRisk.level}
+                        </span>
+                      </p>
+                    </div>
+                    {failed > 0 && (
+                      <p className="text-sm text-amber-700 bg-amber-50 rounded-md px-3 py-2 font-roboto">
+                        {failed} of {total} clauses could not be analysed (the AI service was busy), so this
+                        assessment is incomplete. Run the analysis again for a full result.
+                      </p>
+                    )}
                   </div>
                 );
               })()}

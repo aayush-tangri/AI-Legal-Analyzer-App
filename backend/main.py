@@ -80,10 +80,14 @@ class GeminiModel:
                 return client.models.generate_content(model=model, contents=prompt, config=self._no_thinking_config)
             except Exception as e:
                 msg = str(e)
-                if ("400" in msg or "INVALID_ARGUMENT" in msg) and "think" in msg.lower():
-                    self._thinking_unsupported.add(model)  # model can't disable thinking; call it plainly
-                else:
+                if not ("400" in msg or "INVALID_ARGUMENT" in msg):
                     raise
+                # Some models (e.g. gemini-flash-lite-latest) reject thinking_budget=0 with a generic
+                # "invalid argument" error. Retry once without it; if that works, remember for next time.
+                response = client.models.generate_content(model=model, contents=prompt)
+                self._thinking_unsupported.add(model)
+                print(f"ℹ️ Gemini model {model} does not accept thinking_budget=0; calling it without")
+                return response
         return client.models.generate_content(model=model, contents=prompt)
 
     def generate_content(self, prompt: str, rounds: int = 3):
@@ -127,6 +131,10 @@ class GeminiModel:
 
 generation_model = GeminiModel(GEMINI_MODEL, GEMINI_FALLBACK_MODELS)
 CLAUSE_WORKERS = int(os.environ.get("CLAUSE_WORKERS", "4"))
+
+
+class AnalysisUnavailable(Exception):
+    """Raised when the AI service could not analyse any clause (e.g. rate limits)."""
 
 
 def parse_json_object(text: str):
@@ -290,12 +298,22 @@ def process_contract(document_text: str, summary_prompt: str, analysis_prompt_te
     with ThreadPoolExecutor(max_workers=CLAUSE_WORKERS) as pool:
         results = list(pool.map(analyze_chunk, range(len(chunks)), chunks))
     risk_analysis_results = [r for r in results if r is not None]
+    clauses_failed = len(chunks) - len(risk_analysis_results)
 
-    print("✅ detailed analysis complete.")
+    # Never return an empty risk analysis as if it were a clean bill of health
+    if chunks and not risk_analysis_results:
+        raise AnalysisUnavailable(
+            "The AI service is busy or rate-limited, so the clauses could not be analysed. "
+            "Please wait a minute and try again."
+        )
+
+    print(f"✅ detailed analysis complete ({len(risk_analysis_results)}/{len(chunks)} clauses).")
     response_data = {
         "key_entities": key_entities_result,
         "summary": summary_result,
         "detailed_analysis": risk_analysis_results,
+        "clauses_total": len(chunks),
+        "clauses_failed": clauses_failed,
         "flowchart": mermaid_code,
         "contract_type": contract_type
     }
@@ -541,14 +559,13 @@ def analyze_document():
 
     print(f"Detected contract type: {contract_type}")
 
-    if contract_type == 'rental':
-        return rental_response(document_text)
-    elif contract_type == 'employment':
-        return employment_response(document_text)
-    elif contract_type == 'loan':
-        return loan_response(document_text)
-    else:
+    handlers = {'rental': rental_response, 'employment': employment_response, 'loan': loan_response}
+    if contract_type not in handlers:
         return jsonify({"error": "Unsupported contract type. Only rental, employment and loan agreements are supported."}), 400
+    try:
+        return handlers[contract_type](document_text)
+    except AnalysisUnavailable as e:
+        return jsonify({"error": str(e)}), 503
 
 
 @app.route('/chatbot', methods=['POST'])
